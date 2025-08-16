@@ -13,6 +13,7 @@
 
 namespace App\Models{
 /**
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Task newQuery()
