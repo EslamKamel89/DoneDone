@@ -9,7 +9,8 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-Route::get('dashboard', function () {
+Route::get('dashboard', function (Request $request) {
+    $request->session()->flash('status', 'Operation completed successfully');
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -17,6 +18,12 @@ Route::get('dashboard', function () {
 Route::get('/hello', function (Request $request) {
     $name = $request->get('name', 'VILT');
     return response()->json(['message' => "Hello from $name!"]);
+});
+Route::post('/flash', function (Request $request) {
+    $type =   $request->post('type', 'status');
+    $message = $request->post('message', 'Default message');
+    $request->session()->flash($type, $message);
+    return redirect()->route('dashboard');
 });
 
 
