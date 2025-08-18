@@ -13,7 +13,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', function (Request $request) {
-        $request->session()->flash('status', 'Operation completed successfully');
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::resource('/tasks', TaskController::class);
