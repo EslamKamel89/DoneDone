@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,11 +10,14 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-Route::get('dashboard', function (Request $request) {
-    $request->session()->flash('status', 'Operation completed successfully');
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('dashboard', function (Request $request) {
+        $request->session()->flash('status', 'Operation completed successfully');
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    Route::resource('/tasks', TaskController::class);
+});
 
 Route::get('/hello', function (Request $request) {
     $name = $request->get('name', 'VILT');
